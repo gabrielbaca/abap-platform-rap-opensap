@@ -10,7 +10,7 @@
     @AbapCatalog.tableCategory : #TRANSPARENT
     @AbapCatalog.deliveryClass : #A
     @AbapCatalog.dataMaintenance : #RESTRICTED
-    define table zrap_atrav_SFMX {
+    define table zrap_atrav_sfmx {
       key client            : mandt not null;
       key travel_uuid       : sysuuid_x16 not null;
       travel_id             : /dmo/travel_id;
@@ -40,7 +40,7 @@
     @AbapCatalog.tableCategory : #TRANSPARENT
     @AbapCatalog.deliveryClass : #A
     @AbapCatalog.dataMaintenance : #RESTRICTED
-    define table zrap_abook_SFMX {
+    define table zrap_abook_sfmx {
       key client            : mandt not null;
       key booking_uuid      : sysuuid_x16 not null;
       travel_uuid           : sysuuid_x16 not null;
@@ -61,16 +61,16 @@
 7. Save and activate.
 8. Data preview (empty)
 9. Create class ZCL_GENERATE_DEMO_DATA_SFMX
-10. Replace code
+10. Replace code (Remember to refactor methods into delete and populate)
     ```ABAP
     METHOD if_oo_adt_classrun~main.
 
     " delete existing entries in the database table
-    DELETE FROM zrap_atrav_SFMX.
-    DELETE FROM zrap_abook_SFMX.
+    DELETE FROM zrap_atrav_sfmx.
+    DELETE FROM zrap_abook_sfmx.
 
     " insert travel demo data
-    INSERT zrap_atrav_SFMX FROM (
+    INSERT zrap_atrav_sfmx FROM (
         SELECT FROM 
             /dmo/travel
         FIELDS
@@ -102,11 +102,11 @@
     out->write( 'Travel demo data inserted.').
 
     " insert booking demo data
-    INSERT zrap_abook_SFMX FROM (
+    INSERT zrap_abook_sfmx FROM (
         SELECT FROM   
             /dmo/booking AS booking
         JOIN 
-            zrap_atrav_SFMX AS z ON   
+            zrap_atrav_sfmx AS z ON   
             booking~travel_id = z~travel_id
           FIELDS
             uuid( )                 AS booking_uuid,
