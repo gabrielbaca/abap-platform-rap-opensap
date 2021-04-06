@@ -10,7 +10,7 @@
     @AbapCatalog.tableCategory : #TRANSPARENT
     @AbapCatalog.deliveryClass : #A
     @AbapCatalog.dataMaintenance : #RESTRICTED
-    define table zrap_atrav_#### {
+    define table zrap_atrav_SFMX {
       key client            : mandt not null;
       key travel_uuid       : sysuuid_x16 not null;
       travel_id             : /dmo/travel_id;
@@ -18,9 +18,9 @@
       customer_id           : /dmo/customer_id;
       begin_date            : /dmo/begin_date;
       end_date              : /dmo/end_date;
-      @Semantics.amount.currencyCode : 'zrap_atrav_####.currency_code'
+      @Semantics.amount.currencyCode : 'zrap_atrav_SFMX.currency_code'
       booking_fee           : /dmo/booking_fee;
-      @Semantics.amount.currencyCode : 'zrap_atrav_####.currency_code'
+      @Semantics.amount.currencyCode : 'zrap_atrav_SFMX.currency_code'
       total_price           : /dmo/total_price;
       currency_code         : /dmo/currency_code;
       description           : /dmo/description;
@@ -40,7 +40,7 @@
     @AbapCatalog.tableCategory : #TRANSPARENT
     @AbapCatalog.deliveryClass : #A
     @AbapCatalog.dataMaintenance : #RESTRICTED
-    define table zrap_abook_#### {
+    define table zrap_abook_SFMX {
       key client            : mandt not null;
       key booking_uuid      : sysuuid_x16 not null;
       travel_uuid           : sysuuid_x16 not null;
@@ -50,7 +50,7 @@
       carrier_id            : /dmo/carrier_id;
       connection_id         : /dmo/connection_id;
       flight_date           : /dmo/flight_date;
-      @Semantics.amount.currencyCode : 'zrap_abook_####.currency_code'
+      @Semantics.amount.currencyCode : 'zrap_abook_SFMX.currency_code'
       flight_price          : /dmo/flight_price;
       currency_code         : /dmo/currency_code;
       created_by            : syuname;
@@ -66,11 +66,11 @@
     METHOD if_oo_adt_classrun~main.
 
     " delete existing entries in the database table
-    DELETE FROM zrap_atrav_####.
-    DELETE FROM zrap_abook_####.
+    DELETE FROM zrap_atrav_SFMX.
+    DELETE FROM zrap_abook_SFMX.
 
     " insert travel demo data
-    INSERT zrap_atrav_#### FROM (
+    INSERT zrap_atrav_SFMX FROM (
         SELECT FROM 
             /dmo/travel
         FIELDS
@@ -102,11 +102,11 @@
     out->write( 'Travel demo data inserted.').
 
     " insert booking demo data
-    INSERT zrap_abook_#### FROM (
+    INSERT zrap_abook_SFMX FROM (
         SELECT FROM   
             /dmo/booking AS booking
         JOIN 
-            zrap_atrav_#### AS z ON   
+            zrap_atrav_SFMX AS z ON   
             booking~travel_id = z~travel_id
           FIELDS
             uuid( )                 AS booking_uuid,
