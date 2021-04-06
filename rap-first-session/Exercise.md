@@ -1,7 +1,7 @@
 # ABAP RESTful Programming Model Exercise
 ## Content
 - [Creating the database tables](#creating-the-database-tables)
-- [Creating the Core Data Services (CDS) Data Model](#creating-the-core-data-services-(cds)-data-model)
+- [Creating the Core Data Services (CDS) Data Model](#creating-the-core-data-services-cds-data-model)
 - [Creating CDS Data Model Projection](#creating-cds-data-model-projection)
 - [Enriching the Projected Data Model with UI Metadata](#enriching-the-projected-data-model-with-ui-metadata)
 - [Developing and Previewing the Business Service](#developing-and-previewing-the-business-service)
