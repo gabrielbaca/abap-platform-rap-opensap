@@ -18,9 +18,9 @@
       customer_id           : /dmo/customer_id;
       begin_date            : /dmo/begin_date;
       end_date              : /dmo/end_date;
-      @Semantics.amount.currencyCode : 'zrap_atrav_SFMX.currency_code'
+      @Semantics.amount.currencyCode : 'zrap_atrav_sfmx.currency_code'
       booking_fee           : /dmo/booking_fee;
-      @Semantics.amount.currencyCode : 'zrap_atrav_SFMX.currency_code'
+      @Semantics.amount.currencyCode : 'zrap_atrav_sfmx.currency_code'
       total_price           : /dmo/total_price;
       currency_code         : /dmo/currency_code;
       description           : /dmo/description;
@@ -50,7 +50,7 @@
       carrier_id            : /dmo/carrier_id;
       connection_id         : /dmo/connection_id;
       flight_date           : /dmo/flight_date;
-      @Semantics.amount.currencyCode : 'zrap_abook_SFMX.currency_code'
+      @Semantics.amount.currencyCode : 'zrap_abook_sfmx.currency_code'
       flight_price          : /dmo/flight_price;
       currency_code         : /dmo/currency_code;
       created_by            : syuname;
@@ -127,7 +127,7 @@
 
     out->write( 'Booking demo data inserted.').
     ENDMETHOD.
-    ```ABAP
+    ```
 11. Save and activate.
 12. Press F9 to run in console
 13. Preview tables
