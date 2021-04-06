@@ -311,7 +311,7 @@ You can make use of the Replace All feature (**Ctrl+F**) in ADT for the purpose.
     ![Generate Demo Data](images/w2u2_04_06.png)
 
 # Creating the Core Data Services (CDS) Data Model
-> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#creating-the-core-data-services-(cds)-data-model)
+> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#creating-the-core-data-services-cds-data-model)
 ## Introduction  
 You will define the travel and the booking interface views (aka BO views) of the CDS data model for your travel app. We will directly define the business object structure - i.e. the composition tree – in this exercise.    
     
