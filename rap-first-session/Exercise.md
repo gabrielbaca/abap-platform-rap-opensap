@@ -1,6 +1,6 @@
 # ABAP RESTFul Programming Model - Exercise
 ## Content
-- [Creating the database tables] (#creating_the_database_tables)
+- [Creating the database tables](#creating-the-database-tables)
 - CREATING THE CORE DATA SERVICES (CDS) DATA MODEL
 - CREATING CDS DATA MODEL PROJECTION
 - ENRICHING THE PROJECTED DATA MODEL WITH UI METADATA
