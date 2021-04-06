@@ -1,0 +1,10 @@
+CLASS lcl_test DEFINITION.
+PUBLIC SECTION.
+    METHODS constructor.
+ENDCLASS.
+
+CLASS lcl_test IMPLEMENTATION.
+    METHOD constructor.
+        RAISE EXCEPTION TYPE cx_no_check.
+    ENDMETHOD.
+ENDCLASS.
