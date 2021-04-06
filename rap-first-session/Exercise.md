@@ -1,11 +1,13 @@
-# ABAP RESTFul Programming Model - Exercise
+# ABAP RESTful Programming Model Exercise
 ## Content
 - [Creating the database tables](#creating-the-database-tables)
-- CREATING THE CORE DATA SERVICES (CDS) DATA MODEL
-- CREATING CDS DATA MODEL PROJECTION
-- ENRICHING THE PROJECTED DATA MODEL WITH UI METADATA
-- DEVELOPING AND PREVIEWING THE BUSINESS SERVICE
-# CREATING THE DATABASE TABLES
+- [Creating the Core Data Services (CDS) Data Model](#creating-the-core-data-services-(cds)-data-model)
+- [Creating CDS Data Model Projection](#creating-cds-data-model-projection)
+- [Enriching the Projected Data Model with UI Metadata](#enriching-the-projected-data-model-with-ui-metadata)
+- [Developing and Previewing the Business Service](#developing-and-previewing-the-business-service)
+
+# Creating the database tables
+> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#creating-the-database-tables)
 ## Introduction
 You can watch [week 2 unit 2: Creating the Database Tables](https://open.sap.com/courses/cp13/items/2hlNxSdQ9JJZClJcxQOQb6) on the openSAP platform.
      
@@ -308,7 +310,8 @@ You can make use of the Replace All feature (**Ctrl+F**) in ADT for the purpose.
    
     ![Generate Demo Data](images/w2u2_04_06.png)
 
-# CREATING THE CORE DATA SERVICES (CDS) DATA MODEL
+# Creating the Core Data Services (CDS) Data Model
+> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#creating-the-core-data-services-(cds)-data-model)
 ## Introduction  
 You will define the travel and the booking interface views (aka BO views) of the CDS data model for your travel app. We will directly define the business object structure - i.e. the composition tree – in this exercise.    
     
@@ -558,8 +561,8 @@ For that, replace the definition of the association **`_Booking`** with the foll
 
     These changes have no impact on the data. You can again run (**F8**) the Data Preview.
 
-# CREATING CDS DATA MODEL PROJECTION
-
+# Creating CDS Data Model Projection
+> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#creating-cds-data-model-projection)
 ## Introduction
 You will define the CDS data model projection for your travel app on top of the CDS data model defined in the previous exercise. 
 With projection views, you can expose only those elements that are relevant for the specific service. You can de-normalize the underlying data model and also define fine-tuning such as virtual elements, value helps, search and UI semantics.
@@ -791,8 +794,8 @@ To avoid error during the activation, both new CDS interface views – i.e. Trav
     ![Activate CDS Data Model Projection](images/w2u4_03_04.png)
 
 
-# ENRICHING THE PROJECTED DATA MODEL WITH UI METADATA
-
+# Enriching the Projected Data Model with UI Metadata
+> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#enriching-the-projected-data-model-with-ui-metadata)
 ## Introduction
 You will enrich your CDS data model projection with UI metadata for the latter generation of an SAP Fiori elements-based Travel list report app. The focus of this course is on the RESTful back-end implementation of apps. Therefore, we will use only a few UI annotations to enrich the projected CDS data model for the later generation of our SAP Fiori elements Travel app.  
     
@@ -1061,8 +1064,8 @@ Remove the dummy entry **`element_name;`** and insert all view elements between 
 8.	Save ![save icon](images/adt_save.png) and activate ![activate icon](images/adt_activate.png) the changes.  
 
 
-# DEVELOPING AND PREVIEWING THE BUSINESS SERVICE
-
+# Developing and Previewing the Business Service
+> [Exercise](#abap-restful-programming-model-exercise) > [Content](#content) > [This section](#developing-and-previewing-the-business-service)
 ## Introduction
 In the present  exercise, you will expose your projected CDS data model as OData service using business services – i.e. service definition and service binding.  
     
