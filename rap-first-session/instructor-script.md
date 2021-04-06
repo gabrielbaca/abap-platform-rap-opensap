@@ -1,4 +1,5 @@
-##Create Database Tables
+# Instructor script
+## Create database tables
 1. Create package ZRAP_TRAVEL_SFMX
 2. Add to favorites the parent package
 3. Create travel database table ZRAP_ATRAV_SFMX
@@ -33,7 +34,7 @@
     ```
 5. Create booking database table ZRAP_ABOOK_SFMX
 6. Replace code
-    <pre> 
+    ```ABAP
     @EndUserText.label : 'Booking data'
     @AbapCatalog.enhancementCategory : #NOT_EXTENSIBLE
     @AbapCatalog.tableCategory : #TRANSPARENT
@@ -56,12 +57,12 @@
       last_changed_by       : syuname;
       local_last_changed_at : timestampl;
     }
-    </pre>   
+    ```  
 7. Save and activate.
 8. Data preview (empty)
 9. Create class ZCL_GENERATE_DEMO_DATA_SFMX
 10. Replace code
-    <pre> 
+    ```ABAP
     METHOD if_oo_adt_classrun~main.
 
     " delete existing entries in the database table
@@ -122,7 +123,9 @@
 
     out->write( 'Travel and booking demo data inserted.').
     ENDMETHOD.
-    </pre>
+    ```ABAP
 11. Save and activate.
+12. Press F9 to run in console
+13. Preview tables
 
 ##
