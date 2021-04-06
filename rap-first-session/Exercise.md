@@ -1,3 +1,10 @@
+# ABAP RESTFul Programming Model - Exercise
+## Content
+- [Creating the database tables] (#creating_the_database_tables)
+- CREATING THE CORE DATA SERVICES (CDS) DATA MODEL
+- CREATING CDS DATA MODEL PROJECTION
+- ENRICHING THE PROJECTED DATA MODEL WITH UI METADATA
+- DEVELOPING AND PREVIEWING THE BUSINESS SERVICE
 # CREATING THE DATABASE TABLES
 ## Introduction
 You can watch [week 2 unit 2: Creating the Database Tables](https://open.sap.com/courses/cp13/items/2hlNxSdQ9JJZClJcxQOQb6) on the openSAP platform.
