@@ -11,7 +11,7 @@
 ### Travel database table
 3. Create travel database table ZRAP_ATRAV_SFMX
 4. Replace code
-    ```ABAP
+    ```ABAP CDS
     @EndUserText.label : 'Travel data'
     @AbapCatalog.enhancementCategory : #NOT_EXTENSIBLE
     @AbapCatalog.tableCategory : #TRANSPARENT
@@ -42,7 +42,7 @@
 ### Booking database table
 5. Create booking database table ZRAP_ABOOK_SFMX
 6. Replace code
-    ```ABAP
+    ```ABAP CDS
     @EndUserText.label : 'Booking data'
     @AbapCatalog.enhancementCategory : #NOT_EXTENSIBLE
     @AbapCatalog.tableCategory : #TRANSPARENT
@@ -145,7 +145,7 @@
 ### Travel CDS
 1. Create travel CDS ZI_RAP_TRAVEL_SFMX (any template, will replace)
 2. Replace code
-    ```ABAP
+    ```ABAP CDS
     @AccessControl.authorizationCheck: #CHECK
     @EndUserText.label: 'Travel BO view'
     define view entity zi_rap_travel_sfmx
@@ -191,7 +191,7 @@
 3. Cannot activate, just save
 ### Booking CDS
 4. Create booking CDS ZI_RAP_BOOKING_SFMX (any template, will replace)
-    ```ABAP
+    ```ABAP CDS
     @AccessControl.authorizationCheck: #CHECK
     @EndUserText.label: 'Booking BO view'
     define view entity zi_rap_booking_sfmx
@@ -259,7 +259,7 @@
 ### Travel CDS projection
 1. Create projection view ZC_RAP_TRAVEL_SFMX
 2. Modify code
-    ```ABAP
+    ```ABAP CDS
     @EndUserText.label: 'Travel BO projection view'
     @AccessControl.authorizationCheck: #CHECK
     @Search.searchable: true
@@ -305,7 +305,7 @@
 ### Booking CDS projection
 4. Create projection view ZC_RAP_BOOKING_SFMX
 5. Modify code
-    ```ABAP
+    ```ABAP CDS
     @EndUserText.label: 'Booking BO projection view'
     @AccessControl.authorizationCheck: #CHECK
     @Search.searchable: true
@@ -358,7 +358,7 @@
 1. Create metadata extension ZC_RAP_TRAVEL_SFMX (annotate view template)
 2. Show that after adding ZC_RAP_TRAVEL_SFMX you can use Ctrl+Space to show all elements
 3. Modify code
-    ```ABAP
+    ```ABAP CDS
     @Metadata.layer: #CORE
     @UI: {
     headerInfo: { typeName: 'Travel',
@@ -438,7 +438,7 @@
 4. Create metadata extension ZC_RAP_BOOKING_SFMX (annotate view template)
 5. Show that you can bring up elements
 6. Modify code
-    ```ABAP
+    ```ABAP CDS
     @Metadata.layer: #CORE
     @UI: {
     headerInfo: { typeName: 'Booking',
