@@ -2,7 +2,7 @@
 ## Content
 - [Create database tables](#create-database-tables)
 - [Create Data Model with CDS](#create-data-model-with-cds)
-- []
+- [Create CDS projection](#create-cds-projection)
 ## Create database tables
 1. Create package ZRAP_TRAVEL_SFMX
 2. Add to favorites the parent package
