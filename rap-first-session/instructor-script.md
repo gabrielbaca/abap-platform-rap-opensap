@@ -515,4 +515,4 @@
 3. Save and activate
 ### Create service binding
 4. Create ZUI_RAP_TRAVEL_O2_SFMX by right clicking on service definition
-5. 
+5. Continue via [Create the Service Binding](https://github.com/gabrielbaca/abap-platform-rap-opensap/blob/main/rap-first-session/Exercise.md#step-2-create-the-service-binding)
