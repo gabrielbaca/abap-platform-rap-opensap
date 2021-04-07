@@ -497,7 +497,7 @@
 1. Create service definition ZUI_RAP_TRAVEL_SFMX by right clicking on travel data projection
 2. Modify code and expose tables and catalogs
     ```ABAP CDS
-    @EndUserText.label: 'Serv Definition for Travel App'
+    @EndUserText.label: 'Service definition for travel app'
     define service zui_rap_travel_sfmx {
         expose zc_rap_travel_sfmx as Travel;
         expose zc_rap_booking_sfmx as Booking;
