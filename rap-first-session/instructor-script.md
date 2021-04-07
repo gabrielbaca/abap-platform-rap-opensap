@@ -74,11 +74,11 @@
     ```ABAP
     METHOD if_oo_adt_classrun~main.
 
-    " delete existing entries in the database table
+    "delete table data
     DELETE FROM zrap_atrav_sfmx.
     DELETE FROM zrap_abook_sfmx.
 
-    " insert travel demo data
+    "Insert travel demo data
     INSERT zrap_atrav_sfmx FROM (
         SELECT FROM 
             /dmo/travel
@@ -110,7 +110,7 @@
 
     out->write( 'Travel demo data inserted.').
 
-    " insert booking demo data
+    "Insert booking demo data
     INSERT zrap_abook_sfmx FROM (
         SELECT FROM   
             /dmo/booking AS booking
