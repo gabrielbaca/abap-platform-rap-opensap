@@ -142,7 +142,7 @@
     ```ABAP
     @AccessControl.authorizationCheck: #CHECK
     @EndUserText.label: 'Travel BO view'
-    define view entity ZI_RAP_Travel_####
+    define view entity zi_rap_travel_sfmx
     as select from zrap_atrav_sfmx as Travel
 
     association [0..*] to zi_rap_booking_sfmx as _Booking on $projection.TravelUUID = _Booking.TravelUUID
@@ -188,10 +188,10 @@
     ```ABAP
     @AccessControl.authorizationCheck: #CHECK
     @EndUserText.label: 'Booking BO view'
-    define view entity ZI_RAP_Booking_####
-    as select from zrap_abook_#### as Booking
+    define view entity zi_rap_booking_sfmx
+    as select from zrap_abook_sfmx as Booking
 
-    association [1..1] to ZI_RAP_Travel_####        as _Travel     on  $projection.TravelUUID = _Travel.TravelUUID
+    association [1..1] to zi_rap_travel_sfmx        as _Travel     on  $projection.TravelUUID = _Travel.TravelUUID
     
     association [1..1] to /DMO/I_Customer           as _Customer   on  $projection.CustomerID   = _Customer.CustomerID
     association [1..1] to /DMO/I_Carrier            as _Carrier    on  $projection.CarrierID    = _Carrier.AirlineID
