@@ -2,6 +2,7 @@
 ## Create database tables
 1. Create package ZRAP_TRAVEL_SFMX
 2. Add to favorites the parent package
+### Travel database table
 3. Create travel database table ZRAP_ATRAV_SFMX
 4. Replace code
     ```ABAP
@@ -32,6 +33,7 @@
       local_last_changed_at : timestampl;
     }
     ```
+### Booking database table
 5. Create booking database table ZRAP_ABOOK_SFMX
 6. Replace code
     ```ABAP
@@ -60,6 +62,7 @@
     ```  
 7. Save and activate.
 8. Data preview (empty)
+### Table data generator
 9. Create class ZCL_GENERATE_DEMO_DATA_SFMX
 10. Replace code (Remember to refactor methods into delete and populate)
     ```ABAP
@@ -132,4 +135,99 @@
 12. Press F9 to run in console
 13. Preview tables
 
-##
+## Create Data Model with CDS
+### Travel CDS
+1. Create travel CDS ZI_RAP_TRAVEL_SFMX (any template, will replace)
+2. Replace code
+    ```ABAP
+    @AccessControl.authorizationCheck: #CHECK
+    @EndUserText.label: 'Travel BO view'
+    define view entity ZI_RAP_Travel_####
+    as select from zrap_atrav_sfmx as Travel
+
+    association [0..*] to zi_rap_booking_sfmx as _Booking on $projection.TravelUUID = _Booking.TravelUUID
+
+    association [0..1] to /DMO/I_Agency       as _Agency   on $projection.AgencyID = _Agency.AgencyID
+    association [0..1] to /DMO/I_Customer     as _Customer on $projection.CustomerID = _Customer.CustomerID
+    association [0..1] to I_Currency          as _Currency on $projection.CurrencyCode = _Currency.Currency  
+    {
+    key travel_uuid           as TravelUUID,
+        travel_id             as TravelID,
+        agency_id             as AgencyID,
+        customer_id           as CustomerID,
+        begin_date            as BeginDate,
+        end_date              as EndDate,
+        @Semantics.amount.currencyCode: 'CurrencyCode'
+        booking_fee           as BookingFee,
+        @Semantics.amount.currencyCode: 'CurrencyCode'
+        total_price           as TotalPrice,
+        currency_code         as CurrencyCode,
+        description           as Description,
+        overall_status        as TravelStatus,
+        @Semantics.user.createdBy: true
+        created_by            as CreatedBy,
+        @Semantics.systemDateTime.createdAt: true
+        created_at            as CreatedAt,
+        @Semantics.user.lastChangedBy: true
+        last_changed_by       as LastChangedBy,
+        @Semantics.systemDateTime.lastChangedAt: true
+        last_changed_at       as LastChangedAt,
+        @Semantics.systemDateTime.localInstanceLastChangedAt: true
+        local_last_changed_at as LocalLastChangedAt,
+
+        /* associations */
+        _Booking,
+        _Agency,
+        _Customer,
+        _Currency      
+    }
+    ```
+3. Cannot activate, just save
+### Booking CDS
+4. Create booking CDS ZI_RAP_BOOKING_SFMX (any template, will replace)
+    ```ABAP
+    @AccessControl.authorizationCheck: #CHECK
+    @EndUserText.label: 'Booking BO view'
+    define view entity ZI_RAP_Booking_####
+    as select from zrap_abook_#### as Booking
+
+    association [1..1] to ZI_RAP_Travel_####        as _Travel     on  $projection.TravelUUID = _Travel.TravelUUID
+    
+    association [1..1] to /DMO/I_Customer           as _Customer   on  $projection.CustomerID   = _Customer.CustomerID
+    association [1..1] to /DMO/I_Carrier            as _Carrier    on  $projection.CarrierID    = _Carrier.AirlineID
+    association [1..1] to /DMO/I_Connection         as _Connection on  $projection.CarrierID    = _Connection.AirlineID
+                                                                    and $projection.ConnectionID = _Connection.ConnectionID
+    association [1..1] to /DMO/I_Flight             as _Flight     on  $projection.CarrierID    = _Flight.AirlineID
+                                                                    and $projection.ConnectionID = _Flight.ConnectionID
+                                                                    and $projection.FlightDate   = _Flight.FlightDate
+    association [0..1] to I_Currency                as _Currency   on $projection.CurrencyCode    = _Currency.Currency    
+    {
+    key booking_uuid          as BookingUUID,
+        travel_uuid           as TravelUUID,
+        booking_id            as BookingID,
+        booking_date          as BookingDate,
+        customer_id           as CustomerID,
+        carrier_id            as CarrierID,
+        connection_id         as ConnectionID,
+        flight_date           as FlightDate,
+        @Semantics.amount.currencyCode: 'CurrencyCode'
+        flight_price          as FlightPrice,
+        currency_code         as CurrencyCode,
+        @Semantics.user.createdBy: true
+        created_by            as CreatedBy,
+        @Semantics.user.lastChangedBy: true
+        last_changed_by       as LastChangedBy,
+        @Semantics.systemDateTime.localInstanceLastChangedAt: true
+        local_last_changed_at as LocalLastChangedAt,
+
+        /* associations */
+        _Travel,
+        _Customer,
+        _Carrier,
+        _Connection,
+        _Flight,
+        _Currency
+    }
+    ```
+5. Save and activate all objects.
+6. Preview data
