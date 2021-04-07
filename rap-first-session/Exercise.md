@@ -89,7 +89,7 @@ A Travel entity defines general travel data, such as the agency ID or customer I
 5. Replace the default source code with the code snippet provided below and replace all occurrences of  `####` with your chosen suffix.  
     You can make use of the Replace All feature (**Ctrl+F**) in ADT for the purpose.   
   
-    <pre>
+    ```ABAP
     @EndUserText.label : 'Travel data'
     @AbapCatalog.enhancementCategory : #NOT_EXTENSIBLE
     @AbapCatalog.tableCategory : #TRANSPARENT
@@ -116,7 +116,7 @@ A Travel entity defines general travel data, such as the agency ID or customer I
       last_changed_at       : timestampl;
       local_last_changed_at : timestampl;
     }
-    </pre>
+    ```
    
 
     ![Create Database Table](images/w2u2_02_06.png)
@@ -161,7 +161,7 @@ A Booking entity comprises general flight and booking data, the customer ID for 
 5. Replace the default source code with the code snippet provided below and replace all occurrences of  `####` with your chosen suffix.   
     You can make use of the Replace All feature (shortcut **Ctrl+F**) in ADT for the purpose.  
   
-    <pre> 
+    ```ABAP 
     @EndUserText.label : 'Booking data'
     @AbapCatalog.enhancementCategory : #NOT_EXTENSIBLE
     @AbapCatalog.tableCategory : #TRANSPARENT
@@ -184,7 +184,7 @@ A Booking entity comprises general flight and booking data, the customer ID for 
       last_changed_by       : syuname;
       local_last_changed_at : timestampl;
     }
-    </pre>   
+    ```   
 
     ![Create Database Table](images/w2u2_03_05.png)
   
@@ -224,7 +224,7 @@ You will now fill in the created travel and booking database tables with some de
 4. Insert the implementation of method **`if_oo_adt_classrun~main`**  with the code snippet provided below (after **CLASS zcl_generate_demo_data_#### IMPLEMENTATION.** and before **ENDCLASS.**) as shown on the screenshot below, and replace all occurrences of  `####` with your chosen suffix.   
 You can make use of the Replace All feature (**Ctrl+F**) in ADT for the purpose.  
   
-    <pre> 
+    ```ABAP 
     METHOD if_oo_adt_classrun~main.
 
     " delete existing entries in the database table
@@ -285,7 +285,7 @@ You can make use of the Replace All feature (**Ctrl+F**) in ADT for the purpose.
 
     out->write( 'Travel and booking demo data inserted.').
     ENDMETHOD.
-    </pre>
+    ```
    
     ![Generate Demo Data](images/w2u2_04_04.png)
 
@@ -354,7 +354,7 @@ The project, the package and the referenced object have been automatically assig
 
    Save ![save icon](images/adt_save.png) the changes, but **DO NOT** activate the travel interface view yet.
 
-    <pre>
+    ```ABAP
     @AccessControl.authorizationCheck: #CHECK
     @EndUserText.label: 'Travel BO view'
     define view entity ZI_RAP_Travel_####
@@ -396,7 +396,7 @@ The project, the package and the referenced object have been automatically assig
           _Customer,
           _Currency      
     }
-    </pre>
+    ```
 
     The travel data definition should look as follows.
 
@@ -404,7 +404,7 @@ The project, the package and the referenced object have been automatically assig
 
     **Short explanation: What has changed?**      
     - Following view annotations, specified at the top of the data definition template, have been removed, because they are not relevant for our scenario:
-        <pre> 
+        ```ABAP 
         @AbapCatalog.viewEnhancementCategory: [#NONE]  
         @Metadata.ignorePropagatedAnnotations: true  
         @ObjectModel.usageType:{
@@ -412,7 +412,7 @@ The project, the package and the referenced object have been automatically assig
             sizeCategory: #S,
             dataClass: #MIXED
         }
-        </pre>             
+        ```             
     - The alias **`Travel`**  is now specified for the data source using the keyword **`as`**.
     - Associations are defined for the entities Booking (**`_Booking`**), Agency (**`_Agency`**), Customer (**`_Customer`**) and Currency (**`_Currency`**) – and exposed in the projection list.
     An error is currently displayed by the association **`_Booking`**, because the specified Booking BO view **`ZI_RAP_Booking_####`** does not yet exist. You will create it in the next step.
@@ -452,7 +452,7 @@ The new data definition appears in the editor. You can make use of the Source Co
     
     Save the changes, but **DO NOT** activate the booking interface view yet. 
 
-    <pre>
+    ```ABAP
     @AccessControl.authorizationCheck: #CHECK
     @EndUserText.label: 'Booking BO view'
     define view entity ZI_RAP_Booking_####
@@ -495,7 +495,7 @@ The new data definition appears in the editor. You can make use of the Source Co
           _Flight,
           _Currency
     }
-    </pre>
+    ```
 
     The booking data definition should look as follows.
 
@@ -532,15 +532,15 @@ As already mentioned in the introduction of this unit, this step is not mandator
 Our composition model consists of two nodes: The root node travel and its child node booking.
 
 1.	Open the CDS data definition **`ZI_RAP_TRAVEL_####`** (where `####` is your chosen suffix) and add the keyword **`root`**  in the **`define view entity`** statement to change it as follows:
-    <pre>
+    ```ABAP
       define root view entity ZI_RAP_Travel_####
-    </pre>
+    ```
 
 2.	Adjust the definition of the **`_Booking`** association to a composition which is needed to define the relationship from a parent node (travel) to a child node (booking). 
 For that, replace the definition of the association **`_Booking`** with the following composition definition:  
-    <pre>
+    ```ABAP
        composition [0..*] of ZI_RAP_Booking_#### as _Booking 
-    </pre>
+    ```
 
 3.	Save ![save icon](images/adt_save.png) the changes, but **DO NOT** yet activate the changes. 
     The travel data definition as shown on the screenshot below
@@ -549,9 +549,9 @@ For that, replace the definition of the association **`_Booking`** with the foll
 
 4.	Now open the CDS data definition **`ZI_RAP_BOOKING_####`** and replace the definition of the association **`_Travel`** with the definition provided below to specify the relationship from the child node (_booking_) to its parent node (_travel_). 
 
-    <pre>
+    ```ABAP
       association to parent ZI_RAP_Travel_####        as _Travel     on  $projection.TravelUUID = _Travel.TravelUUID
-    </pre>
+    ```
 
     ![Define BO Structure](images/w2u3_03_02.png)
 
@@ -610,7 +610,7 @@ The project, the package and the referenced object have been automatically assig
     Save ![save icon](images/adt_save.png) the changes, but **DO NOT** yet activate the travel BO projection view.
 
     You can make use of the Source Code Formatter (**Shift+1**) to format the source code.
-    <pre>
+    ```ABAP
     @EndUserText.label: 'Travel BO projection view'
     @AccessControl.authorizationCheck: #CHECK
     @Search.searchable: true
@@ -651,7 +651,7 @@ The project, the package and the referenced object have been automatically assig
           _Currency,
           _Customer   
     }
-    </pre>
+    ```
 
     The data definition should look as follows. 
 
@@ -707,7 +707,7 @@ Now, you will create the missing Booking BO projection view (aka consumption vie
 
     You can make use of the Source Code Formatter (**Shift+1**) to format the source code.
     
-    <pre>
+    ```ABAP
     @EndUserText.label: 'Booking BO projection view'
     @AccessControl.authorizationCheck: #CHECK
     @Search.searchable: true
@@ -750,7 +750,7 @@ Now, you will create the missing Booking BO projection view (aka consumption vie
           _Connection,
           _Flight
     }
-    </pre>
+    ```
 
     The data definition now looks as follows. 
     
@@ -855,7 +855,7 @@ The **`@Metadata.layer`** annotation is specified at the top. The name of the BO
         
     You can make use of the _Replace All_ feature (**Ctrl+F**) in ADT for the purpose and also of the _Source Code Formatter_ (**SHIFT+F1**) to format the source code.  
 
-    <pre>
+    ```ABAP
     @Metadata.layer: #CORE
     @UI: {
       headerInfo: { typeName: 'Travel',
@@ -925,7 +925,7 @@ The **`@Metadata.layer`** annotation is specified at the top. The name of the BO
       @UI.hidden: true
       LocalLastChangedAt;
     }
-    </pre>
+    ```
  
      
      The results looks as follows:    
@@ -998,7 +998,7 @@ Remove the dummy entry **`element_name;`** and insert all view elements between 
     
     You can make use of the _Replace All_ feature (**Ctrl+F**) in ADT for the purpose and also of the _Source Code Formatter_ (**SHIFT+F1**) to format the source code.  
 
-    <pre>
+    ```ABAP
     @Metadata.layer: #CORE
     @UI: {
       headerInfo: { typeName: 'Booking',
@@ -1051,7 +1051,7 @@ Remove the dummy entry **`element_name;`** and insert all view elements between 
       @UI.hidden: true
       LocalLastChangedAt;
     }
-    </pre>
+    ```
  
     ![Create Booking MDE](images/w2u5_02_08.png)
 
@@ -1104,7 +1104,7 @@ First, create the service definition **`ZUI_RAP_Travel_####`** (where `####` is 
     For that, replace the code in the editor with the code snippet provided below. 
     Do not forget to replace all the occurrences of `####` with your chosen suffix. You can make use of the Replace All feature (**Ctrl+F**) in ADT for the purpose.
 
-    <pre>
+    ```ABAP
     @EndUserText.label: 'Serv Definition for Travel App'
     define service ZUI_RAP_TRAVEL_#### {
       expose ZC_RAP_Travel_#### as Travel;
@@ -1118,7 +1118,7 @@ First, create the service definition **`ZUI_RAP_Travel_####`** (where `####` is 
       expose I_Currency as Currency;
       expose I_Country as country;
     }
-    </pre>
+    ```
     
     The service definition will now look as follows:  
 
