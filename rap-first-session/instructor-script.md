@@ -3,6 +3,8 @@
 - [Create database tables](#create-database-tables)
 - [Create Data Model with CDS](#create-data-model-with-cds)
 - [Create CDS projection](#create-cds-projection)
+- [Enrich projection with UI Metadata](#enrich-projection-with-ui-metadata)
+- [Define and expose service](#define-and-expose-service)
 ## Create database tables
 1. Create package ZRAP_TRAVEL_SFMX
 2. Add to favorites the parent package
@@ -350,3 +352,167 @@
 ### Activate Data Model 
 6. Activate all objects
 7. Data preview for each CDS ZC_RAP_TRAVEL_SFMX and ZC_RAP_BOOKING_SFMX
+
+## Enrich projection with UI Metadata
+### Annotate Travel view
+1. Create metadata extension ZC_RAP_TRAVEL_SFMX (annotate view template)
+2. Show that after adding ZC_RAP_TRAVEL_SFMX you can use Ctrl+Space to show all elements
+3. Modify code
+    ```ABAP
+    @Metadata.layer: #CORE
+    @UI: {
+    headerInfo: { typeName: 'Travel',
+                    typeNamePlural: 'Travels',
+                    title: { type: #STANDARD, label: 'Travel', value: 'TravelID' } },
+    presentationVariant: [{ sortOrder: [{ by: 'TravelID', direction:  #DESC }] }] }
+
+    annotate view zc_rap_travel_sfmx with
+    {
+    @UI.facet: [ { id:              'Travel',
+                    purpose:         #STANDARD,
+                    type:            #IDENTIFICATION_REFERENCE,
+                    label:           'Travel',
+                    position:        10 },
+                { id:              'Booking',
+                    purpose:         #STANDARD,
+                    type:            #LINEITEM_REFERENCE,
+                    label:           'Booking',
+                    position:        20,
+                    targetElement:   '_Booking'} ]  
+
+    @UI:{ identification: [{ position: 1, label: 'Travel UUID' }] }
+    TravelUUID;
+
+    @UI: {  lineItem:       [ { position: 10 } ],
+            identification: [ { position: 10 } ],
+            selectionField: [ { position: 10 } ] }  
+    TravelID;
+
+    @UI: {  lineItem:       [ { position: 20 } ],
+            identification: [ { position: 20 } ],
+            selectionField: [ { position: 20 } ] }  
+    AgencyID;
+
+    @UI: {  lineItem:       [ { position: 30 } ],
+            identification: [ { position: 30 } ],
+            selectionField: [ { position: 30 } ] }  
+    CustomerID;
+
+    @UI: {  lineItem:       [ { position: 40 } ],
+            identification: [ { position: 40 } ] }  
+    BeginDate;
+
+    @UI: {  lineItem:       [ { position: 50 } ],
+            identification: [ { position: 50 } ] }   
+    EndDate;
+
+    @UI: {  lineItem:       [ { position: 60 } ],
+            identification: [ { position: 60 } ] }   
+    BookingFee;
+
+    @UI: {  lineItem:       [ { position: 70 } ],
+            identification: [ { position: 70 } ] }   
+    TotalPrice;
+
+    @UI: {  lineItem:       [ { position: 80 } ],
+            identification: [ { position: 80 } ] }   
+    Description;
+
+    @UI: {  lineItem:       [ { position: 90 } ],
+            identification: [ { position: 90 } ] }   
+    TravelStatus;
+
+    @UI.hidden: true
+    LastChangedAt;
+
+    @UI.hidden: true
+    LocalLastChangedAt;
+    }    
+    ```
+### Annotate Booking view
+<pre>
+- @Metadata.layer
+    - #CORE: Application provider
+    - #CUSTOMER: Lower hierarchy
+</pre>
+4. Create metadata extension ZC_RAP_BOOKING_SFMX (annotate view template)
+5. Show that you can bring up elements
+6. Modify code
+    ```ABAP
+    @Metadata.layer: #CORE
+    @UI: {
+    headerInfo: { typeName: 'Booking',
+                    typeNamePlural: 'Bookings',
+                    title: { type: #STANDARD, value: 'BookingID' } } }
+
+    annotate view zc_rap_booking_sfmx
+        with 
+    {
+    @UI.facet: [ { id:            'Booking',
+                    purpose:       #STANDARD,
+                    type:          #IDENTIFICATION_REFERENCE,
+                    label:         'Booking',
+                    position:      10 }  ]
+
+    @UI: { identification: [ { position: 10, label: 'Booking UUID'  } ] }
+    BookingUUID;
+
+    @UI.hidden: true
+    TravelUUID;
+
+    @UI: { lineItem:       [ { position: 20 } ],
+            identification: [ { position: 20 } ] }
+    BookingID;
+
+    @UI: { lineItem:       [ { position: 30 } ],
+            identification: [ { position: 30 } ] }
+    BookingDate;
+
+    @UI: { lineItem:       [ { position: 40 } ],
+            identification: [ { position: 40 } ] }
+    CustomerID;
+
+    @UI: { lineItem:       [ { position: 50 } ],
+            identification: [ { position: 50 } ] }
+    CarrierID;
+
+    @UI: { lineItem:       [ { position: 60 } ],
+            identification: [ { position: 60 } ] }
+    ConnectionID;
+
+    @UI: { lineItem:       [ { position: 70 } ],
+            identification: [ { position: 70 } ] }
+    FlightDate;
+
+    @UI: { lineItem:       [ { position: 80 } ],
+            identification: [ { position: 80 } ] }
+    FlightPrice;
+
+    @UI.hidden: true
+    LocalLastChangedAt;
+    }
+    ```
+
+## Define and expose service
+### Create service definition
+1. Create service definition ZC_RAP_TRAVEL_SFMX by right clicking on travel data projection
+2. Modify code and expose tables and catalogs
+    ```ABAP CDS
+    @EndUserText.label: 'Serv Definition for Travel App'
+    define service zui_rap_travel_sfmx {
+    expose zc_rap_travel_sfmx as Travel;
+    expose zc_rap_booking_sfmx as Booking;
+    expose /DMO/I_Agency as Agency;
+    expose /DMO/I_Customer as Customer;
+    expose /DMO/I_Flight as Flight;
+    expose /DMO/I_Carrier as Carrier;
+    expose /DMO/I_Connection as Connection;
+    expose /DMO/I_Airport as Airport;
+    expose I_Currency as Currency;
+    expose I_Country as country;
+    }    
+    ```
+3. Save and activate
+### Create service binding
+4. Create ZUI_RAP_TRAVEL_O2_SFMX by right clicking on service definition
+5. 
