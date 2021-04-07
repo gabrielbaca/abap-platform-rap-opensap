@@ -1,4 +1,8 @@
 # Instructor script
+## Content
+- [Create database tables](#create-database-tables)
+- [Create Data Model with CDS](#create-data-model-with-cds)
+- []
 ## Create database tables
 1. Create package ZRAP_TRAVEL_SFMX
 2. Add to favorites the parent package
@@ -231,3 +235,9 @@
     ```
 5. Save and activate all objects.
 6. Preview data
+
+## Define composition tree
+7. Edit ZI_RAP_TRAVEL_SFMX adding the keyword root in the view definition.
+    ```ABAP
+    define *root* view entity zi_rap_travel_sfmx
+    ```
