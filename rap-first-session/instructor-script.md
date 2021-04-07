@@ -254,3 +254,99 @@
 9. These changes will have no impact on data.
 
 ## Create CDS projection
+### Travel CDS projection
+1. Create projection view ZC_RAP_TRAVEL_SFMX
+2. Modify code
+    ```ABAP
+    @EndUserText.label: 'Travel BO projection view'
+    @AccessControl.authorizationCheck: #CHECK
+    @Search.searchable: true
+    @Metadata.allowExtensions: true
+
+    define root view entity zc_rap_travel_sfmx
+    as projection on zi_rap_travel_sfmx as Travel
+    {
+    key TravelUUID,
+        @Search.defaultSearchElement: true
+        TravelID,
+        @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Agency', element: 'AgencyID'} }]
+        @ObjectModel.text.element: ['AgencyName']
+        @Search.defaultSearchElement: true
+        AgencyID,
+        _Agency.Name       as AgencyName,
+        @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Customer', element: 'CustomerID'} }]
+        @ObjectModel.text.element: ['CustomerName']
+        @Search.defaultSearchElement: true
+        CustomerID,
+        _Customer.LastName as CustomerName,
+        BeginDate,
+        EndDate,
+        @Semantics.amount.currencyCode: 'CurrencyCode'
+        BookingFee,
+        @Semantics.amount.currencyCode: 'CurrencyCode'
+        TotalPrice,
+        @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Currency', element: 'Currency'} }]
+        CurrencyCode,
+        Description,
+        TravelStatus,
+        LastChangedAt,
+        LocalLastChangedAt,
+
+        /* Associations */
+        _Agency,
+        _Booking : redirected to composition child zc_rap_booking_sfmx,
+        _Currency,
+        _Customer   
+    }
+    ```
+3. Save without activating.
+### Booking CDS projection
+4. Create projection view ZC_RAP_BOOKING_SFMX
+5. Modify code
+    ```ABAP
+    @EndUserText.label: 'Booking BO projection view'
+    @AccessControl.authorizationCheck: #CHECK
+    @Search.searchable: true
+    @Metadata.allowExtensions: true
+
+    define view entity zc_rap_booking_sfmx
+    as projection on zi_rap_booking_sfmx as Booking
+    {
+    key BookingUUID,
+        TravelUUID,
+        @Search.defaultSearchElement: true
+        BookingID,
+        BookingDate,
+        @Consumption.valueHelpDefinition: [{ entity : {name: '/DMO/I_Customer', element: 'CustomerID'  } }]
+        @ObjectModel.text.element: ['CustomerName']
+        @Search.defaultSearchElement: true
+        CustomerID,
+        _Customer.LastName as CustomerName,
+        @Consumption.valueHelpDefinition: [{entity: {name: '/DMO/I_Carrier', element: 'AirlineID' }}]
+        @ObjectModel.text.element: ['CarrierName']
+        CarrierID,
+        _Carrier.Name      as CarrierName,
+        @Consumption.valueHelpDefinition: [ {entity: {name: '/DMO/I_Flight', element: 'ConnectionID'},
+                                            additionalBinding: [ { localElement: 'CarrierID',    element: 'AirlineID' },
+                                                                    { localElement: 'FlightDate',   element: 'FlightDate',   usage: #RESULT},
+                                                                    { localElement: 'FlightPrice',  element: 'Price',        usage: #RESULT },
+                                                                    { localElement: 'CurrencyCode', element: 'CurrencyCode', usage: #RESULT } ] } ]
+        ConnectionID,
+        FlightDate,
+        @Semantics.amount.currencyCode: 'CurrencyCode'
+        FlightPrice,
+        @Consumption.valueHelpDefinition: [{entity: {name: 'I_Currency', element: 'Currency' }}]
+        CurrencyCode,
+        LocalLastChangedAt,
+
+        /* associations */
+        _Travel : redirected to parent zc_rap_travel_sfmx,
+        _Customer,
+        _Carrier,
+        _Connection,
+        _Flight
+    }
+    ```
+### Activate Data Model 
+6. Activate all objects
+7. Data preview for each CDS ZC_RAP_TRAVEL_SFMX and ZC_RAP_BOOKING_SFMX
