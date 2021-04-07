@@ -241,16 +241,16 @@
 ### Define composition tree
 7. Edit ZI_RAP_TRAVEL_SFMX.
     - Add the root keyword
-        ```ABAPCDS
+        ```ABAP CDS
         define root view entity zi_rap_travel_sfmx
         ```
     - Change the association to a composition
-        ```ABAPCDS
+        ```ABAP CDS
         composition [0..*] of zi_rap_booking_sfmx as _Booking 
         ```
 8. Edit ZI_RAP_BOOKING_SFMX
     - Change the association to association to parent
-        ```ABAPCDS
+        ```ABAP CDS
         association to parent zi_rap_travel_sfmx as _Travel on  $projection.TravelUUID = _Travel.TravelUUID
         ```
 9. These changes will have no impact on data.
